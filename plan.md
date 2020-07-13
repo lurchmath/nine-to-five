@@ -1,8 +1,6 @@
 
 # What should I be able to do?
 
- * Workers should be instances of `EventEmitter` already, as per the docs;
-   verify this.
  * Worker should run the script passed.  At first, test this informally by
    dumping some output to the console.  Then formalize the test while also
    creating a test of the following requirement.
