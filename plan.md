@@ -1,9 +1,6 @@
 
 # What should I be able to do?
 
- * If the script can't be loaded, then the `error` event should be called with a
-   `SyntaxError` object.  (Listen for `error` events with an error parameter,
-   for if the worker throws an uncaught exception.)
  * Prepare to prepend custom code to any worker script as follows.  Create a
    file containing the custom code (for now just define a global test variable).
    Load this file syncrhonously at module launch.  When the user provides a
@@ -81,6 +78,8 @@ process.exit() // try this
 
 # What's not supported?
 
+ * If the initial script has a syntax error, we do not report it specifically,
+   because node.js does not have the `SyntaxError` class.
  * `Worker(script)` with `script` an URL
  * `Worker(script,options)` with `options.type=='module'`
  * `Worker(script,options)` with the `options.credentials` field
