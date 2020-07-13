@@ -1,30 +1,7 @@
 
 # What should I be able to do?
 
- * The worker's global scope should be an instance of `EventEmitter`, so that it
-   supports `addEventListener()` and so forth globally, including `emit()`.  If
-   this is not the case already, you will need to create an `EventEmitter`
-   instance and create global functions that route their work through that
-   global instance.  Do so in the global preamble script you just created.
- * Worker objects should support event listening using
-   `worker.addEventListener()` and with fields like `onerror`.
-   (No idea if this is how workers currently work.  It is not how workers
-   currently talk to the parent thread, however.  That happens with
-   `parentPort`, so you'll probably want to reroute that, by adding some code
-   like the following to your preamble.)
-
-```js
-( function () {
-    const wt = require( 'worker_threads' )
-    wt.parentPort.on( 'message', ( ...args ) => {
-        this.emit( 'message', ...args )
-    } )
-    this.postMessage = ( ...args ) => {
-        wt.parentPort.postMessage( ...args )
-    }
-} )()
-```
-
+ * Add support for global `onmessage` field in worker.
  * If the worker script calls `postMessage(data[,transfer])` then a `message`
    event should occur on the outer Worker object with `event.data` a structural
    copy of the given data; ignore the `transfer` parameter.  This will require

@@ -40,6 +40,9 @@ class Worker extends EventEmitter {
         this.nodeWorker.stderr.on( 'data', chunk => {
             this.emit( 'console.error', String( chunk ) )
         } )
+        this.nodeWorker.on( 'message', ( ...args ) => {
+            this.emit( 'message', ...args )
+        } )
         // We can notice when the worker has completed the run of its setup
         // script:
         this.setupComplete = false

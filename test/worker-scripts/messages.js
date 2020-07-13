@@ -1,0 +1,2 @@
+
+postMessage( 'Test message' )

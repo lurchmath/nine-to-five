@@ -4,7 +4,7 @@
   "description": "Imitate WebWorkers in Node",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --full-trace --ui tdd"
+    "test": "mocha test/*.js --full-trace --ui tdd"
   },
   "repository": {
     "type": "git",
