@@ -1,24 +1,6 @@
 
 # What should I be able to do?
 
- * Worker should run the script passed.  At first, test this informally by
-   dumping some output to the console.  Then formalize the test while also
-   creating a test of the following requirement.
- * Workers can use `console.*()`.  Listen for this in the parent using the code
-   below.  Create a simple test that puts into the worker a script that just
-   writes something to `stdout` and verifies that it comes out of the worker.
-
-```js
-// use these options when creating a worker
-const worker = new wt.Worker( '...', { stdout: true, stderr: true } )
-// now when it uses console.log() or console.error(),
-// you can get the values because worker.stdout is a readable stream.
-worker.stdout.on( 'data', ( chunk ) => {
-  // chunk could be string, Buffer, or other...convert to string?
-} )
-// 'end' event is emitted when there is no more data
-```
-
  * If the script can't be loaded, then the `error` event should be called with a
    `SyntaxError` object.  (Listen for `error` events with an error parameter,
    for if the worker throws an uncaught exception.)

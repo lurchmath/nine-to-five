@@ -19,8 +19,20 @@ class Worker extends EventEmitter {
         this.script = script
         this.options = options
         // this will be changed later:
-        this.nodeWorker = new wt.Worker( '', { eval : true } )
+        this.nodeWorker = new wt.Worker( script, {
+            stdout : true,
+            stderr : true
+        } )
+        // Workers may use console.log()/console.error() and we will want to be
+        // able to see it:
+        this.nodeWorker.stdout.on( 'data', chunk => {
+            this.emit( 'console.log', String( chunk ) )
+        } )
+        this.nodeWorker.stderr.on( 'data', chunk => {
+            this.emit( 'console.error', String( chunk ) )
+        } )
     }
+    
 }
 
 module.exports = {
