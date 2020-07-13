@@ -1,0 +1,19 @@
+{
+  "name": "nine-to-five",
+  "version": "0.0.1",
+  "description": "Imitate WebWorkers in Node",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/nathancarter/nine-to-five"
+  },
+  "keywords": [
+    "worker",
+    "node"
+  ],
+  "author": "Nathan Carter (ncarter@bentley.edu)",
+  "license": "LGPL-3.0-or-later"
+}
