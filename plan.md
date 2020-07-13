@@ -1,14 +1,6 @@
 
 # What should I be able to do?
 
- * Can create a worker with required `script` parameter (limited to local files)
-   and optional `options` parameter.
-
-```js
-const wt = require( 'worker_threads' )
-const worker = new wt.Worker('filename')
-```
-
  * Workers should be instances of `EventEmitter` already, as per the docs;
    verify this.
  * Worker should run the script passed.  At first, test this informally by
