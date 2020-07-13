@@ -1,11 +1,14 @@
 
+// import test tools
 let expect = require( 'expect.js' )
+
+// import this module
+let { Worker } = require( '../index.js' )
 
 suite( 'Main', () => {
 
-    test( 'Placeholder', () => {
-        // we'll add real tests later
-        expect( true ).to.be.ok()
+    test( 'Basics', () => {
+        expect( Worker ).to.be.ok()
     } )
 
 } )

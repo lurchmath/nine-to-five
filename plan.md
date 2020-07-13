@@ -1,7 +1,6 @@
 
 # What should I be able to do?
 
- * First install mocha or something for testing.
  * Can create a worker with required `script` parameter (limited to local files)
    and optional `options` parameter.
 
