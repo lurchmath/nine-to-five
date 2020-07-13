@@ -1,13 +1,6 @@
 
 # What should I be able to do?
 
- * Prepare to prepend custom code to any worker script as follows.  Create a
-   file containing the custom code (for now just define a global test variable).
-   Load this file syncrhonously at module launch.  When the user provides a
-   script filename, load it with `fs.read()`, prepend your code to it, then pass
-   that as the *code* as the argument to the `Worker` constructor, and use the
-   option `eval: true`.  Print the global test variable from the script to be
-   sure that this works.
  * The worker's global scope should be an instance of `EventEmitter`, so that it
    supports `addEventListener()` and so forth globally, including `emit()`.  If
    this is not the case already, you will need to create an `EventEmitter`
