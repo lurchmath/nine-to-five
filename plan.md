@@ -18,12 +18,6 @@
    will require you to convert the data given to `postMessage()` into something
    that has the structure of a `MessageEvent`.  See
    [MessageEvent](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent).
- * `worker.terminate()` should stop it immediately; needs no parameters.
-
-```js
-worker.terminate() // works also in Node's version
-```
-
  * Workers can create and use instances of `CustomEvent`.
  * Workers can create and use instances of `Promise`.
  * Workers can access these functions: `atob()`, `btoa()`, `dump()`.

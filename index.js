@@ -65,6 +65,14 @@ class Worker extends EventEmitter {
         }
         return this.code
     }
+
+    /*
+     * Imitates the behavior of terminate() in WebWorkers:
+     * https://developer.mozilla.org/en-US/docs/Web/API/Worker/terminate
+     */
+    terminate () {
+        this.nodeWorker.terminate()
+    }
     
 }
 
