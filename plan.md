@@ -1,8 +1,4 @@
 
-# What should I be able to do?
-
- * Ensure that you can terminate a task and it doesn't do anything more.
-
 # What's not supported?
 
  * If the initial script has a syntax error, we do not report it specifically,

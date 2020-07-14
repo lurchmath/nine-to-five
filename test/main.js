@@ -260,3 +260,31 @@ suite( 'Parallelism', () => {
     } )
 
 } )
+
+suite( 'Early termination', () => {
+
+    test( 'A worker set for 0.5sec but terminated early does less', done => {
+        const w1 = new Worker( testpath + 'seive.js' )
+        const w2 = new Worker( testpath + 'seive.js' )
+        w1.postMessage( 250 ) // Tell it to run for 250ms
+        w2.postMessage( 250 ) // Tell it to run for 250ms
+        // Let w1 take its full 0.25sec.  Stop w2 much earlier.
+        setTimeout( () => w2.terminate(), 100 )
+        // We should hear from w1 when it completes.
+        w1.on( 'message', ( message, transfer ) => {
+            expect( message.data.length ).to.be.greaterThan( 100 )
+            expect( message.data.slice( 0, 10 ) ).to.eql(
+                [ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 ] )
+            w1.terminate()
+        } )
+        // We should not hear from w2 at all; we'll wait 500ms.
+        let heardFrom2 = false
+        w2.on( 'message', () => { heardFrom2 = true } )
+        setTimeout( () => {
+            expect( heardFrom2 ).to.be( false )
+            // no need to terminate w2; we already did 400ms ago.
+            done()
+        }, 500 )
+    } )
+
+} )
