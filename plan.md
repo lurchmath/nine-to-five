@@ -1,7 +1,6 @@
 
 # What should I be able to do?
 
- * Workers can access these functions: `atob()`, `btoa()`, `dump()`.
  * Workers can access these functions: `setInterval()`, `clearInterval()`,
    `setTimeout()`, `clearTimeout()`.
  * Workers can call `importScripts()`.
@@ -39,6 +38,7 @@ process.exit() // try this
  * `WorkerNavigator` API
  * You cannot create your own events, as with the `CustomEvent` class in the
    browser, because Node.js does not support constructing event objects.
+ * The `dump()` function, because it is non-standard.
 
 # References
 

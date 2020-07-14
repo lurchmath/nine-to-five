@@ -36,4 +36,10 @@ let onmessage = null
         wt.parentPort.postMessage( { data : message }, transfer )
     }
 
+    // Implement global functions atob and btoa, which the browser ensures are
+    // available to WebWorkers.
+    // https://developer.mozilla.org/en-US/docs/Web/API/DedicatedWorkerGlobalScope#Methods
+    global.btoa = data => Buffer.from( data, 'binary' ).toString( 'base64' )
+    global.atob = data => Buffer.from( data, 'base64' ).toString( 'binary' )
+
 }

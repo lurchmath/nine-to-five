@@ -84,4 +84,23 @@ suite( 'Functions', () => {
         } )
     } )
 
+    test( 'The atob() and btoa() functions work in workers', done => {
+        const w = new Worker( testpath + 'base64.js' )
+        let numMessagesHeard = 0
+        w.on( 'message', data => {
+            if ( numMessagesHeard == 0 ) {
+                expect( data ).to.eql(
+                    { data : { result : 'SGVsbG8gV29ybGQh' } } )
+                ++numMessagesHeard
+            } else if ( numMessagesHeard == 1 ) {
+                expect( data ).to.eql(
+                    { data : { result : 'Hello World!' } } )
+                w.terminate() // necessary or test will not halt
+                done()
+            }
+        } )
+        w.postMessage( { conversion : 'btoa', input : 'Hello World!' } )
+        w.postMessage( { conversion : 'atob', input : 'SGVsbG8gV29ybGQh' } )
+    } )
+
 } )
