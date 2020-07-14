@@ -213,15 +213,16 @@ suite( 'Network', () => {
 
 suite( 'Parallelism', () => {
 
-    test( 'A worker that computes for 1 second uses up 1 real second', done => {
-        const w = new Worker( testpath + 'one-second.js' )
+    test( 'A worker that computes for 0.5sec uses 0.5sec wall time', done => {
+        const w = new Worker( testpath + 'seive.js' )
+        w.postMessage( 500 ) // Tell it to run for 500ms
         // remember the starting time:
         const start = new Date().getTime()
-        // The Worker is a 1-second-long Seive of Eratosthenes that ends us all
+        // The Worker is a 0.5sec-long Seive of Eratosthenes that ends us all
         // its primes when it's done.
         w.on( 'message', ( message, transfer ) => {
             const stop = new Date().getTime()
-            expect( stop - start ).to.be.greaterThan( 1000 ) // >= 1 second
+            expect( stop - start ).to.be.greaterThan( 500 ) // >= 0.5sec
             expect( message.data.length ).to.be.greaterThan( 100 ) // at least!
             expect( message.data.slice( 0, 10 ) ).to.eql(
                 [ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 ] )
@@ -230,21 +231,23 @@ suite( 'Parallelism', () => {
         } )
     } )
 
-    test( '2 workers that compute for 1 second don\'t take 2 seconds', done => {
-        const w1 = new Worker( testpath + 'one-second.js' )
-        const w2 = new Worker( testpath + 'one-second.js' )
+    test( '2 workers that compute for 0.5sec each don\'t use 1.0sec', done => {
+        const w1 = new Worker( testpath + 'seive.js' )
+        const w2 = new Worker( testpath + 'seive.js' )
+        w1.postMessage( 500 ) // Tell it to run for 500ms
+        w2.postMessage( 500 ) // Tell it to run for 500ms
         // remember the starting time:
         const start = new Date().getTime()
         // Same tests as last time, with two exceptions:
         let numResponsesHeard = 0
         const test = ( message, transfer ) => {
             const stop = new Date().getTime()
-            expect( stop - start ).to.be.greaterThan( 1000 ) // >= 1 second
+            expect( stop - start ).to.be.greaterThan( 500 ) // >= 0.5sec
             // No longer test to be sure that we got at least 100 primes,
             // because a machine with 1 CPU might do these in succession, and
             // so the second seive would stop as soon as it started.
             // But this time we do verify it was clearly less than 2 seconds:
-            expect( stop - start ).to.be.lessThan( 1500 ) // << 2 seconds
+            expect( stop - start ).to.be.lessThan( 750 ) // << 1.0sec
             if ( ++numResponsesHeard == 2 ) {
                 w1.terminate()
                 w2.terminate()
