@@ -1,13 +1,6 @@
 
 # What should I be able to do?
 
- * Workers can self-terminate with `close()`.
-
-```js
-process.exit() // try this
-// parent hears it as an 'exit' event with an int-type exit code parameters
-```
-
  * Optional `options` parameter may specify `options.type=='classic'` or omit
    that field, but nothing else.
  * Optional `options` parameter may specify `optiona.name=='any string'` and the

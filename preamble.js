@@ -69,4 +69,7 @@ let onmessage = null
         }
     }
 
+    // Implement close() in workers that will terminate them.
+    global.close = () => process.exit()
+
 }

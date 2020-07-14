@@ -40,6 +40,20 @@ suite( 'Main', () => {
         } )
     } )
 
+    test( 'Workers can terminate themselves with close()', done => {
+        const w = new Worker( testpath + 'quit.js' )
+        w.on( 'console.log', data => {
+            expect( data ).to.be( 'You will see this output.\n' )
+        } )
+        setTimeout( () => {
+            // If 250ms elapsed without the previous test failing, then we
+            // conclude we're not going to see the second console.log(),
+            // which is correct, because the worker close()d itself.
+            // We do't need to terminate it, because it terminated itself.
+            done()
+        }, 250 )
+    } )
+
 } )
 
 suite( 'Messages', () => {
