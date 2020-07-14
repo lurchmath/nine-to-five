@@ -72,3 +72,16 @@ suite( 'Messages', () => {
     } )
 
 } )
+
+suite( 'Functions', () => {
+
+    test( 'The Promise function exists and works in workers', done => {
+        const w = new Worker( testpath + 'promise.js' )
+        w.on( 'message', data => {
+            expect( data ).to.eql( { data : 'Promises work!' } )
+            w.terminate() // necessary or test will not halt
+            done()
+        } )
+    } )
+
+} )

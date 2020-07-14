@@ -1,7 +1,6 @@
 
 # What should I be able to do?
 
- * Workers can create and use instances of `Promise`.
  * Workers can access these functions: `atob()`, `btoa()`, `dump()`.
  * Workers can access these functions: `setInterval()`, `clearInterval()`,
    `setTimeout()`, `clearTimeout()`.
