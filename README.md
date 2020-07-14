@@ -20,7 +20,8 @@ See also [What's been added](#whats-been-added), below.
 Working, with unit tests, but not a full implementation.
 
 Very little documentation.  See comments in the source code
-([here](index.js) and [here](preamble.js)).
+([here](https://github.com/lurchmath/nine-to-five/blob/master/index.js) and
+[here](https://github.com/lurchmath/nine-to-five/blob/master/preamble.js)).
 
 The goal is to create something that behaves like this:
 
