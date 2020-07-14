@@ -1,8 +1,6 @@
 
 # What should I be able to do?
 
- * Workers can access these functions: `setInterval()`, `clearInterval()`,
-   `setTimeout()`, `clearTimeout()`.
  * Workers can call `importScripts()`.
  * Workers can self-terminate with `close()`.
 

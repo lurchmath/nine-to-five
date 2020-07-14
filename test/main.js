@@ -103,4 +103,47 @@ suite( 'Functions', () => {
         w.postMessage( { conversion : 'atob', input : 'SGVsbG8gV29ybGQh' } )
     } )
 
+    test( 'Interval and timeout functions are available in workers', done => {
+        // See test/worker-scripts/timing.js for code that does the following:
+        // 200ms from now:
+        //   sends the message 'Repeating output'
+        // 400ms from now:
+        //   sends the message 'Repeating output'
+        // 450ms from now:
+        //   also sends the message 'One-time output'
+        // Sends no other messages thereafter
+        const w = new Worker( testpath + 'timing.js' )
+        // We capture all output, like so:
+        let output = [ ]
+        w.on( 'message', data => output.push( data.data ) )
+        // Verify no output has happened after only 100ms
+        setTimeout( () => {
+            expect( output ).to.eql( [ ] )
+        }, 100 )
+        // Verify first repeating output heard after 300ms, nothing else
+        setTimeout( () => {
+            expect( output ).to.eql( [ 'Repeating output' ] )
+        }, 300 )
+        // Verify two repeating outputs and one onoe-time output heard after
+        // 500ms, nothing else
+        setTimeout( () => {
+            expect( output ).to.eql( [
+                'Repeating output',
+                'Repeating output',
+                'One-time output'
+            ] )
+        }, 500 )
+        // Verify the result is exactly the same at 700ms, and thus we can
+        // terminate the worker and end this test.
+        setTimeout( () => {
+            expect( output ).to.eql( [
+                'Repeating output',
+                'Repeating output',
+                'One-time output'
+            ] )
+            w.terminate()
+            done()
+        }, 700 )
+    } )
+
 } )
