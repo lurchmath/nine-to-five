@@ -20,23 +20,23 @@ suite( 'Main', () => {
         expect( w.script ).to.be( testpath + 'basic.js' )
         expect( w.options ).to.eql( { } )
         expect( w.nodeWorker ).to.be.an( EventEmitter )
-        w.terminate()
+        w.terminate() // necessary or test will not halt
     } )
 
     test( 'We can capture console output', done => {
         const w = new Worker( testpath + 'basic.js' )
         finish = () => {
-            w.terminate()
+            w.terminate() // necessary or test will not halt
             done()
         }
-        let total = 0
+        let numMessagesHeard = 0
         w.on( 'console.log', data => {
             expect( data ).to.be( 'script ran successfully\n' )
-            if ( ++total == 2 ) finish()
+            if ( ++numMessagesHeard == 2 ) finish()
         } )
         w.on( 'console.error', data => {
             expect( data ).to.be( 'we would put errors here\n' )
-            if ( ++total == 2 ) finish()
+            if ( ++numMessagesHeard == 2 ) finish()
         } )
     } )
 
@@ -48,7 +48,7 @@ suite( 'Messages', () => {
         const w = new Worker( testpath + 'messages.js' )
         w.on( 'message', data => {
             expect( data ).to.be( 'Test message' )
-            w.terminate()
+            w.terminate() // necessary or test will not halt
             done()
         } )
     } )
