@@ -1,22 +1,6 @@
 
 # What should I be able to do?
 
- * If the worker script calls `postMessage(data[,transfer])` then a `message`
-   event should occur on the outer Worker object with `event.data` a structural
-   copy of the given data; ignore the `transfer` parameter.  This will require
-   you to convert the data given to `postMessage()` into something that has the
-   structure of a `MessageEvent`.  See
-   [MessageEvent](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent).
- * If the data can't be deserialized to create the message event, it must call a
-   `messageerror` event instead (still with a `MessageEvent`, but
-   [the docs](https://developer.mozilla.org/en-US/docs/Web/API/Worker/messageerror_event)
-   don't say specifically how to decide on its fields' contents, so just do
-   something that makes sense).
- * Calling `worker.postMessage(message,[transfer])` does the same thing as if
-   you called it from in the worker, but in reverse, including errors.  This
-   will require you to convert the data given to `postMessage()` into something
-   that has the structure of a `MessageEvent`.  See
-   [MessageEvent](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent).
  * Workers can create and use instances of `CustomEvent`.
  * Workers can create and use instances of `Promise`.
  * Workers can access these functions: `atob()`, `btoa()`, `dump()`.
@@ -45,6 +29,7 @@ process.exit() // try this
 
  * If the initial script has a syntax error, we do not report it specifically,
    because node.js does not have the `SyntaxError` class.
+ * Similarly, we do not generate `messageerror` events.
  * `Worker(script)` with `script` an URL
  * `Worker(script,options)` with `options.type=='module'`
  * `Worker(script,options)` with the `options.credentials` field

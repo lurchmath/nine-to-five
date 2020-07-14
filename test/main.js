@@ -47,7 +47,7 @@ suite( 'Messages', () => {
     test( 'We can receive messages from a script', done => {
         const w = new Worker( testpath + 'messages-out.js' )
         w.on( 'message', data => {
-            expect( data ).to.be( 'Test message' )
+            expect( data ).to.eql( { data : 'Test message' } )
             w.terminate() // necessary or test will not halt
             done()
         } )

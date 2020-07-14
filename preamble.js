@@ -28,6 +28,12 @@ let onmessage = null
         // if they've assigned to the global onmessage handler, trigger it
         if ( onmessage ) onmessage( ...args )
     } )
-    global.postMessage = ( ...args ) => wt.parentPort.postMessage( ...args )
+
+    // Implement the global postMessage event, wrapping the message in an object
+    // with a data field, to simulate part of the MessageEvent structure.  See:
+    // https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent
+    global.postMessage = ( message, transfer ) => {
+        wt.parentPort.postMessage( { data : message }, transfer )
+    }
 
 }

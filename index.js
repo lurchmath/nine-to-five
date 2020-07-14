@@ -11,6 +11,11 @@ const preamble =
 /*
  * Imitates the behavior of the browser's Worker class:
  * https://developer.mozilla.org/en-US/docs/Web/API/Worker
+ * 
+ * For message events, the message object will have a data field only.  The
+ * fields origin, lastEventIt, source, and ports are not implemented.  They are
+ * (partially) documented here:
+ * https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent
  */
 class Worker extends EventEmitter {
 
@@ -69,9 +74,13 @@ class Worker extends EventEmitter {
     /*
      * Imitates the behavior of postMessage() in WebWorkers:
      * https://developer.mozilla.org/en-US/docs/Web/API/Worker/postMessage
+     * 
+     * This creates a wrapper with a data field, to partially imitate the
+     * structure of a MessageEvent.  For more information, see:
+     * https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent
      */
     postMessage ( message, transfer ) {
-        this.nodeWorker.postMessage( message, transfer )
+        this.nodeWorker.postMessage( { data : message }, transfer )
     }
 
     /*
