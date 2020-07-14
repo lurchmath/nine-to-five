@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "github.com/nathancarter/nine-to-five"
+    "url": "git://github.com/lurchmath/nine-to-five.git"
   },
   "keywords": [
     "worker",
