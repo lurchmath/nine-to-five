@@ -1,8 +1,6 @@
 
 # What should I be able to do?
 
- * Check to see if the `XMLHttpRequest` API is already supported in the worker.
-   If not, add it to my list of what's not supported.
  * Ensure that you can do multiple slow tasks in parallel.
  * Ensure that you can terminate a task and it doesn't do anything more.
 

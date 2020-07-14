@@ -194,3 +194,19 @@ suite( 'Importing', () => {
     } )
 
 } )
+
+suite( 'Network', () => {
+
+    test( 'Workers can make XMLHttpRequests', done => {
+        const w = new Worker( testpath + 'xmlhttprequest.js' )
+        // that file tries to get the main page from http://www.google.com.
+        w.on( 'message', ( message, transfer ) => {
+            // worker sends us the content of the page...just be sure there is
+            // something there:
+            expect( message.data.length ).to.be.greaterThan( 100 )
+            w.terminate()
+            done()
+        } )
+    } )
+
+} )

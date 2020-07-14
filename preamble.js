@@ -72,4 +72,9 @@ let onmessage = null
     // Implement close() in workers that will terminate them.
     global.close = () => process.exit()
 
+    // Expose an XMLHttpRequest emulator to the Worker, like the browser would
+    // supply.  Thanks to github.com/driverdan:
+    // https://www.npmjs.com/package/xmlhttprequest
+    global.XMLHttpRequest = require( 'xmlhttprequest' ).XMLHttpRequest
+
 }
