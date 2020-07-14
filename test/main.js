@@ -210,3 +210,50 @@ suite( 'Network', () => {
     } )
 
 } )
+
+suite( 'Parallelism', () => {
+
+    test( 'A worker that computes for 1 second uses up 1 real second', done => {
+        const w = new Worker( testpath + 'one-second.js' )
+        // remember the starting time:
+        const start = new Date().getTime()
+        // The Worker is a 1-second-long Seive of Eratosthenes that ends us all
+        // its primes when it's done.
+        w.on( 'message', ( message, transfer ) => {
+            const stop = new Date().getTime()
+            expect( stop - start ).to.be.greaterThan( 1000 ) // >= 1 second
+            expect( message.data.length ).to.be.greaterThan( 100 ) // at least!
+            expect( message.data.slice( 0, 10 ) ).to.eql(
+                [ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 ] )
+            w.terminate()
+            done()
+        } )
+    } )
+
+    test( '2 workers that compute for 1 second don\'t take 2 seconds', done => {
+        const w1 = new Worker( testpath + 'one-second.js' )
+        const w2 = new Worker( testpath + 'one-second.js' )
+        // remember the starting time:
+        const start = new Date().getTime()
+        // Same tests as last time, with two exceptions:
+        let numResponsesHeard = 0
+        const test = ( message, transfer ) => {
+            const stop = new Date().getTime()
+            expect( stop - start ).to.be.greaterThan( 1000 ) // >= 1 second
+            // No longer test to be sure that we got at least 100 primes,
+            // because a machine with 1 CPU might do these in succession, and
+            // so the second seive would stop as soon as it started.
+            // But this time we do verify it was clearly less than 2 seconds:
+            expect( stop - start ).to.be.lessThan( 1500 ) // << 2 seconds
+            if ( ++numResponsesHeard == 2 ) {
+                w1.terminate()
+                w2.terminate()
+                done()
+            }
+        }
+        // Install same test in both workers:
+        w1.on( 'message', test )
+        w2.on( 'message', test )
+    } )
+
+} )
