@@ -1,5 +1,9 @@
 
-let onmessage = null
+// This file is prepended to every worker script, to prepare the Worker
+// environment to act more like it would in a browser.
+// To see where it gets prepended, look for "preamble.js" in index.js's code.
+
+let onmessage = null // workers can overwrite this, optional
 
 {
 
