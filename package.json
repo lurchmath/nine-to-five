@@ -1,6 +1,6 @@
 {
   "name": "nine-to-five",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Imitate WebWorkers in Node",
   "main": "index.js",
   "scripts": {

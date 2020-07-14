@@ -9,26 +9,23 @@ for Node.js.
 [worker_threads](https://nodejs.org/api/worker_threads.html) module built in to
 Node.js!
 
-**A:** Yes, but it doesn't have the same API.  If you want to re-use browser
-code on the command line without rewriting, you want the API to be the same.
+**A:** Yes, but it doesn't have the
+[WebWorker API](https://developer.mozilla.org/en-US/docs/Web/API/Worker/Worker),
+nor all the [Functions in WebWorkers' global scope](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Functions_and_classes_available_to_workers).
+To reuse code the API must be the same.
+
 This library is essentially a thin layer on top of `worker_threads` to make it
-look and behave like WebWorkers.
-See also [What's been added](#whats-been-added), below.
+look and behave like WebWorkers. See also
+[What's been added](#whats-been-added), below.
 
 ## Status
 
-Working, with unit tests, but not a full implementation.
+Working, with unit tests, but see [What's not supported](#whats-not-supported).
 
-Very little documentation.  See comments in the source code
+For documentation, read the example and bullet points below, and optionally the
+comments in the source
 ([here](https://github.com/lurchmath/nine-to-five/blob/master/index.js) and
 [here](https://github.com/lurchmath/nine-to-five/blob/master/preamble.js)).
-
-The goal is to create something that behaves like this:
-
- * [WebWorker API](https://developer.mozilla.org/en-US/docs/Web/API/Worker/Worker)
- * [Functions in Worker global scope](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Functions_and_classes_available_to_workers)
-
-See [What's not supported](#whats-not-supported), below.
 
 ## Example
 
