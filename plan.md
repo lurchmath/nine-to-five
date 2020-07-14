@@ -1,8 +1,6 @@
 
 # What should I be able to do?
 
- * Optional `options` parameter may specify `options.type=='classic'` or omit
-   that field, but nothing else.
  * Optional `options` parameter may specify `optiona.name=='any string'` and the
    Worker global scope will have `name` set to that string.
  * Worker can read its global scope name value with code `self.name`.  (Just
@@ -29,6 +27,7 @@
  * You cannot create your own events, as with the `CustomEvent` class in the
    browser, because Node.js does not support constructing event objects.
  * The `dump()` function, because it is non-standard.
+ * The `options.type` parameter to a Worker constructor is ignored.
 
 # References
 
