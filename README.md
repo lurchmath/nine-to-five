@@ -71,15 +71,22 @@ That is, how is this better than Node's built-in
 [worker_threads](https://nodejs.org/api/worker_threads.html) module?
 (The example above could have been done using that alone, I think.)
 
- * Workers can use `importScripts()`.
- * Workers can use the `XMLHttpRequest` API.
+ * Workers can use
+   [importScripts()](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/importScripts).
+ * Workers can use the
+   [XMLHttpRequest API](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest).
  * Workers can access `on`, `off`, `onmessage`, `addEventListener`,
-   `removeEventListener`, `emit`, and `postMessage`.
+   `removeEventListener`, `emit`, and
+   [postMessage](https://developer.mozilla.org/en-US/docs/Web/API/DedicatedWorkerGlobalScope/postMessage).
  * Message events behave like they would in the browser, in this sense:
     * `myWorker.postMessage(x)` sends the Worker a message `{ data : x }`
     * `postMessage(x)` in the Worker sends out a message `{ data : x }`
- * Workers can use `close()` to terminate themselves.
- * Workers can use the `atob()` and `btoa()` functions.
+ * Workers can use
+   [close()](https://developer.mozilla.org/en-US/docs/Web/API/DedicatedWorkerGlobalScope/close)
+   to terminate themselves.
+ * Workers can use the
+   [atob()](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/atob) and
+   [btoa()](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa) functions.
 
 ## What's not supported?
 
@@ -108,4 +115,5 @@ That is, how is this better than Node's built-in
  * [WorkerNavigator](https://developer.mozilla.org/en-US/docs/Web/API/WorkerNavigator)
  * You cannot create your own events, as with the `CustomEvent` class in the
    browser, because Node.js does not support constructing event objects.
- * The `dump()` function is not supported in Workers; it is non-standard.
+ * The [dump()](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/dump)
+   function is not supported in Workers; it is non-standard.
