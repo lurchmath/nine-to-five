@@ -28,7 +28,7 @@ class Worker extends EventEmitter {
      */
     constructor ( script, options = { } ) {
         super()
-        this.script = script
+        this.script = path.resolve( script )
         this.options = options
         this.code = null
         // this will be changed later:
@@ -66,7 +66,13 @@ class Worker extends EventEmitter {
      */
     buildScriptCode () {
         if ( !this.code ) {
-            this.code = preamble + '\n' + fs.readFileSync( this.script )
+            const escape = x => x.replace( /\\/g, '\\\\' )
+                                 .replace( /"/g, '\\"' )
+            this.code =
+                `const __filename = "${escape( this.script )}"\n`
+              + `const __dirname = "${escape( path.dirname( this.script ) )}"\n`
+              + preamble + '\n'
+              + fs.readFileSync( this.script )
         }
         return this.code
     }
