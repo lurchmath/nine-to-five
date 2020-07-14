@@ -16,4 +16,4 @@ look and behave like WebWorkers.
 
 ## Status
 
-Absolutely just beginning, not much of anything done yet
+Working, with unit tests, but not a full implementation.
