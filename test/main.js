@@ -54,6 +54,24 @@ suite( 'Main', () => {
         }, 250 )
     } )
 
+    test( 'We can give workers names that they can see', done => {
+        const w = new Worker( testpath + 'print-name.js', { name : 'Hank' } )
+        w.on( 'console.log', data => {
+            expect( data ).to.be( 'Hank\n' )
+            w.terminate()
+            done()
+        } )
+    } )
+
+    test( 'Workers without names report them as undefined', done => {
+        const w = new Worker( testpath + 'print-name.js' )
+        w.on( 'console.log', data => {
+            expect( data ).to.be( 'undefined\n' )
+            w.terminate()
+            done()
+        } )
+    } )
+
 } )
 
 suite( 'Messages', () => {

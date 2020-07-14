@@ -71,8 +71,10 @@ class Worker extends EventEmitter {
             this.code =
                 `const __filename = "${escape( this.script )}"\n`
               + `const __dirname = "${escape( path.dirname( this.script ) )}"\n`
-              + preamble + '\n'
-              + fs.readFileSync( this.script )
+            if ( this.options.hasOwnProperty( 'name' ) )
+                this.code += `const name = "${escape( this.options.name )}"\n`
+            this.code += preamble + '\n'
+                       + fs.readFileSync( this.script )
         }
         return this.code
     }

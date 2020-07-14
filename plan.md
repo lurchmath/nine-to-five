@@ -1,10 +1,6 @@
 
 # What should I be able to do?
 
- * Optional `options` parameter may specify `optiona.name=='any string'` and the
-   Worker global scope will have `name` set to that string.
- * Worker can read its global scope name value with code `self.name`.  (Just
-   add this to the preamble.)
  * Check to see if the `XMLHttpRequest` API is already supported in the worker.
    If not, add it to my list of what's not supported.
  * Ensure that you can do multiple slow tasks in parallel.
