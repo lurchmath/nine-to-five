@@ -13,6 +13,7 @@ Node.js!
 code on the command line without rewriting, you want the API to be the same.
 This library is essentially a thin layer on top of `worker_threads` to make it
 look and behave like WebWorkers.
+See also [What's been added](#whats-been-added), below.
 
 ## Status
 
@@ -26,7 +27,7 @@ The goal is to create something that behaves like this:
  * [WebWorker API](https://developer.mozilla.org/en-US/docs/Web/API/Worker/Worker)
  * [Functions in Worker global scope](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Functions_and_classes_available_to_workers)
 
-See [What's not supported](#whats-not-suppoorted), below.
+See [What's not supported](#whats-not-supported), below.
 
 ## Example
 
@@ -64,15 +65,31 @@ npm install nine-to-five
 
 Clone this repo.  You can run tests with `npm test`.
 
+## What's been added?
+
+That is, how is this better than Node's built-in
+[worker_threads](https://nodejs.org/api/worker_threads.html) module?
+(The example above could have been done using that alone, I think.)
+
+ * Workers can use `importScripts()`.
+ * Workers can use the `XMLHttpRequest` API.
+ * Workers can access `on`, `off`, `onmessage`, `addEventListener`,
+   `removeEventListener`, `emit`, and `postMessage`.
+ * Message events behave like they would in the browser, in this sense:
+    * `myWorker.postMessage(x)` sends the Worker a message `{ data : x }`
+    * `postMessage(x)` in the Worker sends out a message `{ data : x }`
+ * Workers can use `close()` to terminate themselves.
+ * Workers can use the `atob()` and `btoa()` functions.
+
 ## What's not supported?
 
-Some errors
+### Some errors
 
  * If the Worker script has a syntax error, the web implementation throws a
    `SyntaxError`, but we do not.
  * Similarly, we do not generate `messageerror` events.
 
-Worker constructor details
+### Some Worker constructor options
 
  * `Worker(script)` requires `script` to be a filename relative
    to the current working directory; in particular, it cannot be a URL.
@@ -81,7 +98,7 @@ Worker constructor details
  * `Worker(script,options)` does not support the `options.credentials` field;
    it ignores it.
 
-Missing APIs in Workers
+### Some Worker APIs
 
  * [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
  * [Performance](https://developer.mozilla.org/en-US/docs/Web/API/Performance)
@@ -89,9 +106,6 @@ Missing APIs in Workers
  * [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
  * [WorkerLocation](https://developer.mozilla.org/en-US/docs/Web/API/WorkerLocation)
  * [WorkerNavigator](https://developer.mozilla.org/en-US/docs/Web/API/WorkerNavigator)
-
-Miscellany
-
  * You cannot create your own events, as with the `CustomEvent` class in the
    browser, because Node.js does not support constructing event objects.
  * The `dump()` function is not supported in Workers; it is non-standard.
