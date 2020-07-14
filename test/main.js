@@ -147,3 +147,18 @@ suite( 'Functions', () => {
     } )
 
 } )
+
+suite( 'Importing', () => {
+
+    test( 'Workers can import other scripts', done => {
+        const w = new Worker( testpath + 'importer.js' )
+        // that imports another file that defines test_value and then posts it
+        // for us to see; this will work only if the import succeeded.
+        w.on( 'console.log', data => {
+            expect( data ).to.eql( '12345\n' )
+            w.terminate()
+            done()
+        } )
+    } )
+
+} )

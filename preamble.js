@@ -42,4 +42,31 @@ let onmessage = null
     global.btoa = data => Buffer.from( data, 'binary' ).toString( 'base64' )
     global.atob = data => Buffer.from( data, 'base64' ).toString( 'binary' )
 
+    // Implement importScripts() to behave like the following:
+    // https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/importScripts
+    // Note that this is just a slight tweak of Sebastiaan Deckers' project
+    // import-scripts on npm, to suit my needs.  See his very helpful work here:
+    // https://gitlab.com/sebdeckers/import-scripts/-/blob/master/src/index.js
+    const path = require( 'path' )
+    const vm = require( 'vm' )
+    const fs = require( 'fs' )
+    global.importScripts = ( ...scripts ) => {
+        for ( const script of scripts ) {
+            let filepath, code
+            try {
+                filepath = path.resolve( __dirname, script )
+            } catch ( error ) {
+                throw new SyntaxError( error.message )
+            }        
+            try {
+                code = fs.readFileSync( filepath, 'utf-8' )
+            } catch ( error ) {
+                const newError = new Error( error.message )
+                newError.name = 'NetworkError'
+                throw newError
+            }        
+            vm.runInThisContext( code, { filename : filepath } )
+        }
+    }
+
 }

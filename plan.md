@@ -1,7 +1,6 @@
 
 # What should I be able to do?
 
- * Workers can call `importScripts()`.
  * Workers can self-terminate with `close()`.
 
 ```js
