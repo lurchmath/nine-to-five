@@ -1,7 +1,6 @@
 
 # What should I be able to do?
 
- * Workers can create and use instances of `CustomEvent`.
  * Workers can create and use instances of `Promise`.
  * Workers can access these functions: `atob()`, `btoa()`, `dump()`.
  * Workers can access these functions: `setInterval()`, `clearInterval()`,
@@ -39,6 +38,8 @@ process.exit() // try this
  * Worker API for using WebSockets
  * `WorkerLocation` API
  * `WorkerNavigator` API
+ * You cannot create your own events, as with the `CustomEvent` class in the
+   browser, because Node.js does not support constructing event objects.
 
 # References
 
