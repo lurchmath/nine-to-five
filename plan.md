@@ -1,7 +1,6 @@
 
 # What should I be able to do?
 
- * Add support for global `onmessage` field in worker.
  * If the worker script calls `postMessage(data[,transfer])` then a `message`
    event should occur on the outer Worker object with `event.data` a structural
    copy of the given data; ignore the `transfer` parameter.  This will require

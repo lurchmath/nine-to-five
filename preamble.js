@@ -1,4 +1,6 @@
 
+let onmessage = null
+
 {
 
     // Create an EventEmitter that will function as if the whole Worker were an
@@ -20,8 +22,12 @@
     // Implement expected message events and postMessage function, by rerouting
     // them through the event system we just built and that of the parentPort.
     const wt = require( 'worker_threads' )
-    wt.parentPort.on( 'message',
-        ( ...args ) => global.emit( 'message', ...args ) )
+    wt.parentPort.on( 'message', ( ...args ) => {
+        // if they've added event listeners, ensure they are triggered
+        global.emit( 'message', ...args )
+        // if they've assigned to the global onmessage handler, trigger it
+        if ( onmessage ) onmessage( ...args )
+    } )
     global.postMessage = ( ...args ) => wt.parentPort.postMessage( ...args )
 
 }

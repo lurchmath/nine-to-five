@@ -45,12 +45,30 @@ suite( 'Main', () => {
 suite( 'Messages', () => {
 
     test( 'We can receive messages from a script', done => {
-        const w = new Worker( testpath + 'messages.js' )
+        const w = new Worker( testpath + 'messages-out.js' )
         w.on( 'message', data => {
             expect( data ).to.be( 'Test message' )
             w.terminate() // necessary or test will not halt
             done()
         } )
+    } )
+
+    test( 'We can send messages from a script', done => {
+        const w = new Worker( testpath + 'messages-in.js' )
+        let numMessagesHeard = 0
+        w.on( 'console.log', data => {
+            if ( numMessagesHeard == 0 ) {
+                expect( data ).to.be(
+                    'message event heard message from main thread\n' )
+                ++numMessagesHeard
+            } else if ( numMessagesHeard == 1 ) {
+                expect( data ).to.be(
+                    'onmessage heard message from main thread\n' )
+                w.terminate() // necessary or test will not halt
+                done()
+            }
+        } )
+        w.postMessage( 'message from main thread' )
     } )
 
 } )

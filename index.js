@@ -67,6 +67,14 @@ class Worker extends EventEmitter {
     }
 
     /*
+     * Imitates the behavior of postMessage() in WebWorkers:
+     * https://developer.mozilla.org/en-US/docs/Web/API/Worker/postMessage
+     */
+    postMessage ( message, transfer ) {
+        this.nodeWorker.postMessage( message, transfer )
+    }
+
+    /*
      * Imitates the behavior of terminate() in WebWorkers:
      * https://developer.mozilla.org/en-US/docs/Web/API/Worker/terminate
      */
